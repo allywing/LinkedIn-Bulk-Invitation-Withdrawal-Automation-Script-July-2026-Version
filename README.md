@@ -35,9 +35,9 @@ Continue until all pending invitations have been removed.
 /*
 You are free to use this script anywhere with proper credit and contact info of the developer.
 */
-(function() {
+    
+    (function() {
     console.log("Started LinkedIn Withdraw Automation");
-
     let totalCount = 0;
     const timeoutInterval = 2000; // 2 seconds between actions
 
