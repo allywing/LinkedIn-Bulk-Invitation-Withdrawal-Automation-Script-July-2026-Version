@@ -1,0 +1,85 @@
+Withdraw All Your LinkedIn Connection Invitations Automatically
+
+Clear all your pending LinkedIn connection invitations in one click. This updated July 2026 script automatically withdraws every pending request and handles the confirmation popup for you—no manual clicking required. Fast, reliable, and perfect for cleaning up your LinkedIn account.
+
+How It Works
+
+Simply copy the contents of the linkedin-bulk-invitation-withdraw-script-2026.js file, paste it into the Chrome Developer Console, press Enter, and the script will automatically withdraw all your pending LinkedIn connection invitations—including confirming each withdrawal—without any manual interaction.
+
+How to Use the Script
+1. Open the Sent Invitations Page
+
+Launch Google Chrome on your Mac or Windows PC and go to your LinkedIn Invitation Manager → Sent page.
+
+2. Open Chrome Developer Tools
+
+Right-click anywhere on the page and select Inspect, then open the Console tab.
+
+3. Paste and Run the Script
+
+Copy the contents of linkedin-bulk-invitation-withdraw-script-2026.js, paste it into the Console, and press Enter.
+
+The script will automatically:
+
+Detect all pending sent invitations.
+Click Withdraw for each invitation.
+Confirm the withdrawal in the popup dialog.
+Continue until all pending invitations have been removed.
+
+
+(function() {
+    console.log("Started LinkedIn Withdraw Automation");
+
+    let totalCount = 0;
+    const timeoutInterval = 2000; // 2 seconds between actions
+
+    function findWithdrawButtons() {
+        return Array.from(document.querySelectorAll('span'))
+            .filter(el => el.innerText.trim() === 'Withdraw');
+    }
+
+    function clickConfirmButton() {
+        const confirmBtn = Array.from(document.querySelectorAll('button, span'))
+            .find(el => el.innerText.trim() === 'Withdraw' && el.offsetParent !== null);
+        if (confirmBtn) {
+            try {
+                confirmBtn.click();
+                totalCount++;
+                console.log(`Confirmed withdrawal #${totalCount}`);
+                return true;
+            } catch (err) {
+                console.error("Failed to click confirm:", err);
+                return false;
+            }
+        }
+        return false;
+    }
+
+    function runWithdraw() {
+        const buttons = findWithdrawButtons();
+        if (buttons.length === 0) {
+            console.log("No withdraw buttons found. Retrying in 3 seconds...");
+            setTimeout(runWithdraw, 3000);
+            return;
+        }
+
+        const button = buttons[0]; // Pick the first one
+        try {
+            button.click();
+            console.log("Clicked initial Withdraw button");
+        } catch (err) {
+            console.error("Failed to click initial button:", err);
+        }
+
+        setTimeout(() => {
+            if (clickConfirmButton()) {
+                console.log("Clicked confirm in modal");
+            } else {
+                console.log("Confirm button not found, maybe already processed");
+            }
+            setTimeout(runWithdraw, timeoutInterval);
+        }, 1000);
+    }
+
+    runWithdraw();
+})();
