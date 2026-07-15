@@ -27,10 +27,14 @@ Confirm the withdrawal in the popup dialog.
 Continue until all pending invitations have been removed.
 
 
+
+
+
+
+
 /*
 You are free to use this script anywhere with proper credit and contact info of the developer.
 */
-
 (function() {
     console.log("Started LinkedIn Withdraw Automation");
 
@@ -85,5 +89,4 @@ You are free to use this script anywhere with proper credit and contact info of 
         }, 1000);
     }
 
-    runWithdraw();
-})();
+    runWithdraw(); })();
